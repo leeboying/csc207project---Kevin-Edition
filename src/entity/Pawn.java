@@ -55,6 +55,8 @@ public class Pawn extends Piece {
             validMoves.add(leftCapture);
         }
 
+        // TODO: prune moves that leave king in check
+
         return validMoves.toArray(new Move[0]); // turn our set into an array and return it
     }
 

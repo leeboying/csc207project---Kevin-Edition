@@ -32,6 +32,8 @@ public class Knight extends Piece {
             } // otherwise square is friendly or out of bounds, so invalid move
         }
 
+        // TODO: prune moves that leave king in check
+
         return validMoves.toArray(new Move[0]);
     }
 

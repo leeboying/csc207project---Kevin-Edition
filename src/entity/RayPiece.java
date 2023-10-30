@@ -50,8 +50,9 @@ public class RayPiece extends Piece {
             }
         }
 
-        return validMoves.toArray(new Move[0]);
+        // TODO: prune moves that leave king in check
 
+        return validMoves.toArray(new Move[0]);
     }
 
     private Move makeCapture(ArrayList<Integer> position, ArrayList<Integer> destination) {
