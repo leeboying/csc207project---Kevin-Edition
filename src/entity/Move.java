@@ -19,35 +19,65 @@ public class Move {
         this.destination = destination;
 
     }
+
     // getters and setters
-    public void setIsEnPassant(){isEnPassant = true;}
+    public void setIsEnPassant() {
+        isEnPassant = true;
+    }
 
-    public void setIsCastle(){isCastle = true;}
+    public void setIsCastle() {
+        isCastle = true;
+    }
 
-    public void setIsPromotion(){isPromotion = true;}
+    public void setIsPromotion() {
+        isPromotion = true;
+    }
 
-    public void setPiecePromotedTo(Piece promotion) {piecePromotedTo = promotion;}
+    public void setPiecePromotedTo(Piece promotion) {
+        piecePromotedTo = promotion;
+    }
 
-    public void setPieceCaptured(){pieceCaptured = true;}
+    public void setPieceCaptured() {
+        pieceCaptured = true;
+    }
 
-    public void setPieceCaptureLocation(ArrayList<Integer> captureLocation){
-        pieceCaptureLocation =  captureLocation;}
+    public void setPieceCaptureLocation(ArrayList<Integer> captureLocation) {
+        pieceCaptureLocation = captureLocation;
+    }
 
-    public boolean getIsEnPassant() {return isEnPassant;}
+    public boolean getIsEnPassant() {
+        return isEnPassant;
+    }
 
-    public boolean getIsCastle() {return isCastle;}
+    public boolean getIsCastle() {
+        return isCastle;
+    }
 
-    public boolean getIsPromotion() {return isPromotion;}
+    public boolean getIsPromotion() {
+        return isPromotion;
+    }
 
-    public Piece getPiecePromotedTo() {return piecePromotedTo;}
+    public Piece getPiecePromotedTo() {
+        return piecePromotedTo;
+    }
 
-    public boolean getIsPieceCaptured() {return pieceCaptured;}
+    public boolean getIsPieceCaptured() {
+        return pieceCaptured;
+    }
 
-    public ArrayList<Integer> getPieceCaptureLocation() {return pieceCaptureLocation;}
+    public ArrayList<Integer> getPieceCaptureLocation() {
+        return pieceCaptureLocation;
+    }
 
-    public Piece getPieceMoving() {return pieceMoving;}
+    public Piece getPieceMoving() {
+        return pieceMoving;
+    }
 
-    public ArrayList<Integer> getOrigin() {return origin;}
+    public ArrayList<Integer> getOrigin() {
+        return origin;
+    }
 
-    public ArrayList<Integer> getDestination() {return destination;}
+    public ArrayList<Integer> getDestination() {
+        return destination;
+    }
 }
