@@ -14,12 +14,12 @@ public class King extends Piece {
     public Move[] getValidMoves(ArrayList<Integer> position, HashMap<ArrayList<Integer>, Piece> boardState, Move lastMove) {
         Set<Move> validMoves = new HashSet<>();
 
-        int[] knightXDisplacements = {-1, -1, -1, 0, 1, 1, 1, 0};
-        int[] knightYDisplacements = {-1, 0, 1, 1, 1, 0, -1, -1};
+        int[] xDisplacements = {-1, -1, -1, 0, 1, 1, 1, 0};
+        int[] yDisplacements = {-1, 0, 1, 1, 1, 0, -1, -1};
 
-        for (int i = 0; i < knightXDisplacements.length; i++) {
-            int x = position.get(0) + knightXDisplacements[i];
-            int y = position.get(1) + knightYDisplacements[i];
+        for (int i = 0; i < xDisplacements.length; i++) {
+            int x = position.get(0) + xDisplacements[i];
+            int y = position.get(1) + yDisplacements[i];
 
             ArrayList<Integer> target = coordinateBuilder(x, y);
 
