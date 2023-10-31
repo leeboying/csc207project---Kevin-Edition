@@ -14,12 +14,12 @@ public class King extends Piece {
     public Move[] getValidMoves(ArrayList<Integer> position, HashMap<ArrayList<Integer>, Piece> boardState, Move lastMove) {
         Set<Move> validMoves = new HashSet<>();
 
-        int[] xDisplacements = {-1, -1, -1, 0, 1, 1, 1, 0};
-        int[] yDisplacements = {-1, 0, 1, 1, 1, 0, -1, -1};
+        int[] knightXDisplacements = {-1, -1, -1, 0, 1, 1, 1, 0};
+        int[] knightYDisplacements = {-1, 0, 1, 1, 1, 0, -1, -1};
 
-        for (int i = 0; i < xDisplacements.length; i++) {
-            int x = position.get(0) + xDisplacements[i];
-            int y = position.get(1) + yDisplacements[i];
+        for (int i = 0; i < knightXDisplacements.length; i++) {
+            int x = position.get(0) + knightXDisplacements[i];
+            int y = position.get(1) + knightYDisplacements[i];
 
             ArrayList<Integer> target = coordinateBuilder(x, y);
 
@@ -83,7 +83,7 @@ public class King extends Piece {
     }
 
     private boolean wouldBeCheck(ArrayList<Integer> position, HashMap<ArrayList<Integer>, Piece> boardState,
-                                ArrayList<Integer> newPos) {
+                                 ArrayList<Integer> newPos) {
         HashMap<ArrayList<Integer>, Piece> tempBoardState = new HashMap<>(boardState);
 
         tempBoardState.put(newPos, this);
@@ -93,8 +93,106 @@ public class King extends Piece {
     }
 
     public boolean isInCheck(ArrayList<Integer> position, HashMap<ArrayList<Integer>, Piece> boardState) {
+        // check knight movement pattens around the king for enemy knights, then check rays for B/Q/R
+        // then check pawn attackers
+
+        int[] knightXDisplacements = {-2, -2, -1, -1, 1, 1, 2, 2};
+        int[] knightYDisplacements = {-1, 1, -2, 2, -2, 2, -1, 1};
+        int[] rookXDirections = {-1, 1, 0, 0};
+        int[] rookYDirections = {0, 0, 1, -1};
+        int[] bishopXDirections = {-1, 1, -1, 1};
+        int[] bishopYDirections = {-1, -1, 1, 1};
+
+        // check all possible knight moves
+        for (int i = 0; i < knightXDisplacements.length; i++) {
+            int targetX = position.get(0) + knightXDisplacements[i];
+            int targetY = position.get(1) + knightYDisplacements[i];
+
+            String targetSquareType = checkSquare(targetX, targetY, boardState);
+
+            if (targetSquareType.equals("enemy") // enemy knight able to attack king
+                    && boardState.get(coordinateBuilder(targetX, targetY)) instanceof Knight) {
+                return true;
+            }
+        }
+
+        // check bishop movement patterns (for bishops and queens)
+        for (int i = 0; i < bishopXDirections.length; i++) {
+            boolean continueRay = true;
+
+            int x = position.get(0);
+            int y = position.get(1);
+
+            while (continueRay) {
+                x += bishopXDirections[i];
+                y += bishopYDirections[i];
+
+                String squareType = checkSquare(x, y, boardState);
+
+                switch(squareType) {
+                    case "stop" -> continueRay = false;
+                    case "enemy" -> { // if an enemy bishop or queen is the first piece on a diagonal, king in check
+                        Piece enemyPiece = boardState.get(coordinateBuilder(x, y));
+                        if (enemyPiece instanceof Bishop || enemyPiece instanceof Queen) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+
+        // check rook movement patterns (for bishops and queens)
+        for (int i = 0; i < rookXDirections.length; i++) {
+            boolean continueRay = true;
+
+            int x = position.get(0);
+            int y = position.get(1);
+
+            while (continueRay) {
+                x += rookXDirections[i];
+                y += rookYDirections[i];
+
+                String squareType = checkSquare(x, y, boardState);
+
+                switch(squareType) {
+                    case "stop" -> continueRay = false;
+                    case "enemy" -> { // if an enemy rook or queen is the first piece on a row/column, king in check
+                        Piece enemyPiece = boardState.get(coordinateBuilder(x, y));
+                        if (enemyPiece instanceof Rook || enemyPiece instanceof Queen) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+
+        // finally check for pawns that might attack
+        // set move direction as appropriate by color, throw exception if color isn't properly defined
+        int moveDirection;
+        if (color.equals("white")) {
+            moveDirection = 1;
+        } else if (color.equals("black")) {
+            moveDirection = -1;
+        } else {
+            throw new RuntimeException("King at (" + position.get(0) + ',' + position.get(1) + ") wasn't black or white.");
+        }
+
+        ArrayList<Integer> leftPawnPos = coordinateBuilder(position.get(0) - 1, position.get(1) + moveDirection);
+        ArrayList<Integer> rightPawnPos = coordinateBuilder(position.get(0) + 1, position.get(1) + moveDirection);
+
+        // check that the squares in question are valid squares, if they contain enemies, and then, if those enemies are pawns
+        // if all are true, king is in check, otherwise, no pawn is checking the king
+        if (checkSquare(leftPawnPos.get(0), leftPawnPos.get(1), boardState).equals("enemy")
+                && boardState.get(leftPawnPos) instanceof Pawn) {
+            return true;
+        }
+        if (checkSquare(rightPawnPos.get(0), rightPawnPos.get(1), boardState).equals("enemy")
+                && boardState.get(rightPawnPos) instanceof Pawn) {
+            return true;
+        }
+
+        // not under attack by knights, bishops, rooks, queens, or pawns, so not in check at all
         return false;
-        // TODO: IMPLEMENT THIS
     }
 
     private Move makeCapture(ArrayList<Integer> position, ArrayList<Integer> destination) {
