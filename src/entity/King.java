@@ -31,8 +31,8 @@ public class King extends Piece {
                 // check that king is not in check
                 HashMap<ArrayList<Integer>, Piece> tempBoardState = new HashMap<>(boardState);
 
-                tempBoardState.put(position, null);
                 tempBoardState.put(target, this);
+                tempBoardState.put(position, null);
 
                 if (!isInCheck(target, tempBoardState)) {
                     validMoves.add(potentialMove);
@@ -43,8 +43,8 @@ public class King extends Piece {
                 // check that king is not in check
                 HashMap<ArrayList<Integer>, Piece> tempBoardState = new HashMap<>(boardState);
 
-                tempBoardState.put(position, null);
                 tempBoardState.put(target, this);
+                tempBoardState.put(position, null);
 
                 if (!isInCheck(target, tempBoardState)) {
                     validMoves.add(potentialMove);
@@ -52,8 +52,32 @@ public class King extends Piece {
             }
         }
 
+        // castling special case
+        if (!hasMoved) { // king has not moved yet
+            int y = position.get(1);
+            Piece potentialRightRook = boardState.get(coordinateBuilder(1, y));
+            Piece potentialLeftRook = boardState.get(coordinateBuilder(8, y));
+            if (potentialRightRook instanceof Rook && !potentialRightRook.hasMoved // rook at a1/a8 that has not moved
+                    && boardState.get(coordinateBuilder(2, y)) == null // no pieces in between king and rook
+                    && boardState.get(coordinateBuilder(3, y)) == null) {
+
+                HashMap<ArrayList<Integer>, Piece> tempBoardState = new HashMap<>(boardState);
+
+                tempBoardState.put(coordinateBuilder(3, y), this);
+                tempBoardState.put(position, null);
+
+
+            }
+
+            if (potentialRightRook instanceof Rook && !potentialRightRook.hasMoved // rook at a1/a8 that has not moved
+                    && ) {
+
+            }
+        }
+
         return validMoves.toArray(new Move[0]);
     }
+
 
     public boolean isInCheck(ArrayList<Integer> position, HashMap<ArrayList<Integer>, Piece> boardState) {
         return false;
