@@ -42,7 +42,7 @@ public class PawnMoveTest {
 
         Move[] moves = pawnE2.getValidMoves(pos, boardState, new Move(null, null, null));
 
-        assertEquals(moves.length, 2);
+        assertEquals(2, moves.length);
 
         ArrayList<ArrayList<Integer>> moveDestinations = new ArrayList<>(2);
 
@@ -64,7 +64,7 @@ public class PawnMoveTest {
 
         Move[] moves = pawnD7.getValidMoves(pos, boardState, new Move(null, null, null));
 
-        assertEquals(moves.length, 2);
+        assertEquals(2, moves.length);
 
         ArrayList<ArrayList<Integer>> moveDestinations = new ArrayList<>(2);
 
@@ -92,7 +92,7 @@ public class PawnMoveTest {
         Move[] moves = pawnE4.getValidMoves(coords(5, 4), boardState,
                 new Move(null, null, null));
 
-        assertEquals(moves.length, 2);
+        assertEquals(2, moves.length);
 
         ArrayList<ArrayList<Integer>> moveDestinations = new ArrayList<>(2);
 
@@ -123,7 +123,7 @@ public class PawnMoveTest {
         Move[] moves = pawnE7.getValidMoves(coords(5, 7), boardState,
                 new Move(null, null, null));
 
-        assertEquals(moves.length, 1);
+        assertEquals(1, moves.length);
 
         ArrayList<ArrayList<Integer>> moveDestinations = new ArrayList<>(2);
 
@@ -153,7 +153,7 @@ public class PawnMoveTest {
         Move[] moves = pawnE7.getValidMoves(coords(5, 7), boardState,
                 new Move(null, null, null));
 
-        assertEquals(moves.length, 2);
+        assertEquals(2, moves.length);
 
         ArrayList<ArrayList<Integer>> moveDestinations = new ArrayList<>(2);
 
@@ -183,8 +183,7 @@ public class PawnMoveTest {
         Move[] moves = boardState.get(coords(2, 2)).getValidMoves(coords(2, 2),
                 boardState, new Move(null, null, null));
 
-        // this SHOULD FAIL as of 10/30/2023 since checking for checks is not implemented yet.
-        assertEquals(moves.length, 0);
+        assertEquals(0, moves.length);
     }
 
     @org.junit.Test
@@ -200,8 +199,7 @@ public class PawnMoveTest {
         Move[] moves = boardState.get(coords(2, 2)).getValidMoves(coords(2, 2),
                 boardState, new Move(null, null, null));
 
-        // this SHOULD FAIL as of 10/30/2023 since checking for checks is not implemented yet.
-        assertEquals(moves.length, 1);
+        assertEquals(1, moves.length);
 
         // pawn's only valid move is to go to b3 to block the rook attacking the king
         assertEquals(moves[0].getDestination(), coords(2, 3));

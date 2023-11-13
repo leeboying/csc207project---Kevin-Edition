@@ -108,7 +108,7 @@ public class King extends Piece {
             tempBoardState.put(coordinateBuilder(targetX, targetY), null);
         }
 
-        return isInCheck(kingPosition, boardState);
+        return isInCheck(kingPosition, tempBoardState);
     }
 
     public boolean isInCheck(ArrayList<Integer> position, HashMap<ArrayList<Integer>, Piece> boardState) {
