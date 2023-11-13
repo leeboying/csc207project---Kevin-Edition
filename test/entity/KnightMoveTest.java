@@ -3,8 +3,9 @@ package entity;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import static org.junit.Assert.*;
-public class RayPieceMoveTest {
+import static org.junit.Assert.assertEquals;
+
+public class KnightMoveTest {
     public HashMap<ArrayList<Integer>, Piece> defaultBoardState() {
         Board newBoard = new Board();
 
@@ -32,20 +33,22 @@ public class RayPieceMoveTest {
     }
 
     @org.junit.Test
-    public void testQueenMoves() {
+    public void testKnightMoves() {
         HashMap<ArrayList<Integer>, Piece> board = emptyBoard();
 
-        board.put(coords(4, 4), new Queen("black"));
+        board.put(coords(4, 4), new Knight("black"));
 
-        board.put(coords(5, 4), new King("black"));
+        board.put(coords(2, 3), new King("black"));
 
-        board.put(coords(1, 2), new King("white"));
+        board.put(coords(3,2), new Pawn("black"));
 
-        board.put(coords(2, 2), new Pawn("white"));
+        board.put(coords(6, 5), new Rook("white"));
+
+        board.put(coords(1,1), new King("white"));
 
         Move[] moves = board.get(coords(4, 4)).getValidMoves(coords(4, 4), board, new Move(null, null, null));
 
-        assertEquals(22, moves.length);
+        assertEquals(6, moves.length);
     }
 
     @org.junit.Test
@@ -54,7 +57,7 @@ public class RayPieceMoveTest {
 
         board.put(coords(1, 1), new Rook("white"));
 
-        board.put(coords(1, 5), new Queen("black"));
+        board.put(coords(1, 5), new Knight("black"));
 
         board.put(coords(1, 7), new King("black"));
 
@@ -62,6 +65,6 @@ public class RayPieceMoveTest {
 
         Move[] moves = board.get(coords(1, 5)).getValidMoves(coords(1, 5), board, new Move(null, null, null));
 
-        assertEquals(5, moves.length);
+        assertEquals(0, moves.length);
     }
 }
