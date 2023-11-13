@@ -178,11 +178,12 @@ public class PawnMoveTest {
         boardState.put(coords(1, 1), new King("white"));
         boardState.put(coords(2, 2), new Pawn("white"));
         boardState.put(coords(8, 8), new Bishop("black"));
+        boardState.put(coords(8, 7), new King("black"));
 
         Move[] moves = boardState.get(coords(2, 2)).getValidMoves(coords(2, 2),
                 boardState, new Move(null, null, null));
 
-        // this SHOULD FAIL as of 10/30/2023 since pins are not implemented yet.
+        // this SHOULD FAIL as of 10/30/2023 since checking for checks is not implemented yet.
         assertEquals(moves.length, 0);
     }
 
@@ -194,11 +195,12 @@ public class PawnMoveTest {
         boardState.put(coords(1, 3), new King("white"));
         boardState.put(coords(2, 2), new Pawn("white"));
         boardState.put(coords(8, 3), new Rook("black"));
+        boardState.put(coords(8, 7), new King("black"));
 
         Move[] moves = boardState.get(coords(2, 2)).getValidMoves(coords(2, 2),
                 boardState, new Move(null, null, null));
 
-        // this SHOULD FAIL as of 10/30/2023 since pins are not implemented yet.
+        // this SHOULD FAIL as of 10/30/2023 since checking for checks is not implemented yet.
         assertEquals(moves.length, 1);
 
         // pawn's only valid move is to go to b3 to block the rook attacking the king
