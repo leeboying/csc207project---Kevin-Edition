@@ -84,12 +84,31 @@ public class King extends Piece {
 
     private boolean wouldBeCheck(ArrayList<Integer> position, HashMap<ArrayList<Integer>, Piece> boardState,
                                  ArrayList<Integer> newPos) {
+        // check if a hypothetical move by the king would result in check
+
         HashMap<ArrayList<Integer>, Piece> tempBoardState = new HashMap<>(boardState);
 
         tempBoardState.put(newPos, this);
         tempBoardState.put(position, null);
 
         return isInCheck(newPos, tempBoardState);
+    }
+
+    protected boolean checkHelper(ArrayList<Integer> kingPosition, HashMap<ArrayList<Integer>, Piece> boardState, Move move) {
+        // make a hypothetical move, and then see if that move would result in a check
+
+        HashMap<ArrayList<Integer>, Piece> tempBoardState = new HashMap<>(boardState);
+
+        tempBoardState.put(move.getOrigin(), null);
+        tempBoardState.put(move.getDestination(), move.getPieceMoving());
+
+        if (move.getIsEnPassant()) { // add in the extra capture from en passant
+            int targetX = move.getDestination().get(0);
+            int targetY = move.getOrigin().get(1);
+            tempBoardState.put(coordinateBuilder(targetX, targetY), null);
+        }
+
+        return isInCheck(kingPosition, boardState);
     }
 
     public boolean isInCheck(ArrayList<Integer> position, HashMap<ArrayList<Integer>, Piece> boardState) {
