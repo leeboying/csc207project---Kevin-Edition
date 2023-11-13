@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
-public class RayPiece extends Piece {
+abstract class RayPiece extends Piece {
     protected int[] rayDirectionsX;
     protected int[] rayDirectionsY;
     protected RayPiece(String color, int[] rayDirectionsX, int[] rayDirectionsY) {
