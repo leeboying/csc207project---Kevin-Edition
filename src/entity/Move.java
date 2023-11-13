@@ -90,6 +90,12 @@ public class Move {
         String startingSquare = (char)(96 + origin.get(0)) + origin.get(1).toString();
         String endingSquare = (char)(96 + destination.get(0)) + destination.get(1).toString();
 
-        return startingSquare + endingSquare;
+        String move = startingSquare + endingSquare;
+
+        if (isPromotion) {
+            return move + "q";
+        }
+
+        return move;
     }
 }
