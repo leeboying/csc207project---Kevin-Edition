@@ -1,11 +1,10 @@
 package app;
 
-import interface_adapter.SwingChessView;
+import view.MainMenuView;
 
 public class Main {
     public static void main(String[] args) {
-        SwingChessView chessView = new SwingChessView();
-        chessView.showMainMenu();
+        new MainMenuView().show();
 
     }
 }
