@@ -1,7 +1,12 @@
 // PracticeWithAIView.java
 package view;
 
+import data_access.MakeMoveDataAccessObject;
 import entity.Board;
+import interface_adapter.make_move.MakeMoveController;
+import interface_adapter.make_move.MakeMovePresenter;
+import interface_adapter.make_move.MakeMoveViewModel;
+import use_case.make_move.MakeMoveInteractor;
 import view.MenuView;
 
 import javax.swing.*;
@@ -53,13 +58,14 @@ public class PracticeWithAIView implements MenuView {
                     close();
 
                     // Create chess board
-                    JFrame application = new JFrame("Chess game");
-                    application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-                    application.setVisible(true);
-                    application.setSize(654,678);
-                    application.setLocationRelativeTo(null);
                     Board board = new Board();
-                    BoardView boardview = new BoardView(application, board);
+                    MakeMoveViewModel makeMoveViewModel = new MakeMoveViewModel();
+                    MakeMovePresenter makeMovePresenter = new MakeMovePresenter(makeMoveViewModel);
+                    MakeMoveDataAccessObject makeMoveDataAccessObject = new MakeMoveDataAccessObject("abcd");
+                    MakeMoveInteractor makeMoveInteractor = new MakeMoveInteractor(makeMoveDataAccessObject, makeMovePresenter, board);
+                    MakeMoveController makeMoveController = new MakeMoveController(makeMoveInteractor);
+                    BoardView boardview = new BoardView(board, makeMoveController, makeMoveViewModel);
+                    boardview.setVisible(true);
                 }
             });
             contentPanel.add(startButton);
